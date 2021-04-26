@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/head.ejs") %>
+<body>
+    <div class="container mx-auto p-4 font-sans">
+        <h2 class="text-3xl font-bold text-center text-indigo-800">Completed Todos</h2>
+        <div class="container my-6 ml-2">
+            <a href="/" class="justify-self-end py-2 px-10 inline-block bg-green-700 rounded-md text-base text-white font-semibold" id="addTodo">
+                Back
+            </a>
+        </div>
+        <div class="container max-w-lg mx-auto">
+            <% todos.forEach(todo => { %>
+                    <div class="container mt-4 p-2 shadow-lg rounded-md bg-blue-50">
+                        <div>
+                            <span class="font-sans text-sm font-semibold mb-1 block"><%= todo.todo %></span>
+                            <span class="block text-xs">todo added: <%= todo.newDate %></span>
+                        </div>
+                    </div>
+            <% }) %>
+        </div>
+    </div>
+
+</body>
+</html>

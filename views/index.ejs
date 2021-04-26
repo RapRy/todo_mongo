@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include("./partials/head.ejs") %>
+<body>
+    <div class="container mx-auto p-4 font-sans">
+        <h2 class="text-3xl font-bold text-center text-indigo-800">Todos</h2>
+        <div class="container mx-auto my-6 grid-cols-2 grid gap-10">
+            <a class="justify-self-end py-2 px-10 inline-block bg-blue-600 rounded-md text-base text-white font-semibold" id="addTodo">
+                Add Todo
+            </a>
+            <a href="/CompletedTodos" class="justify-self-start py-2 px-10 inline-block bg-green-700 rounded-md text-base text-white font-semibold">
+                Finished Todos
+            </a>
+        </div>
+        <div class="container" id="addForm">
+            <form action="/" method="POST" class="mx-auto">
+                <input class="shadow-inner rounded-md w-max" type="text" id="todoInput" name="todo" required />
+                <input type="hidden" name="isDone" value="false" checked required />
+                <button>Submit</button>
+            </form>
+        </div>
+        <div class="container max-w-lg mx-auto">
+            <% todos.forEach(todo => { %>
+                    <div class="container grid grid-cols-2 gap-2 mt-4 p-2 shadow-lg rounded-md bg-blue-50 items-center">
+                        <div>
+                            <span class="font-sans text-sm font-semibold mb-1 block"><%= todo.todo %></span>
+                            <span class="block text-xs">Todo Added: <%= todo.newDate %></span>
+                        </div>
+                        <div class="justify-self-end">
+                            <input type="hidden" value="<%= todo._id %>" />
+                            <button class="doneBtn bg-yellow-500 rounded-md text-sm py-2 px-4 font-semibold mr-2 text-white">Done</button>
+                            <button class="deleteBtn doneBtn bg-red-600 rounded-md text-sm py-2 px-4 font-semibold text-white">Delete</button>
+                        </div>
+                    </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <script>
+        const doneBtn = document.querySelectorAll('.doneBtn')
+        const deleteBtn = document.querySelectorAll('.deleteBtn')
+
+        doneBtn.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.previousElementSibling.value
+
+                fetch(`/${id}`, {
+                    method:'PUT'
+                })
+                .then(res => res.json())
+                .then(data => window.location.href = data.redirect)
+                .catch(err => console.log(err))
+            })
+        })
+
+        deleteBtn.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.previousElementSibling.previousElementSibling.value
+
+                fetch(`/${id}`, {
+                    method:'DELETE'
+                })
+                .then(res => res.json())
+                .then(data => window.location.href = data.redirect)
+                .catch(err => console.log(err))
+            })
+        })
+    </script>
+</body>
+</html>
