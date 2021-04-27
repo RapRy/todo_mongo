@@ -22,4 +22,4 @@ app.use(express.urlencoded({ extended:true }))
 app.use('/', todoRoutes)
 
 
-app.listen(3000, () => console.log('server listening at port 3000'))
+app.listen(process.env.PORT, () => console.log('server listening at port 3000'))
