@@ -11,7 +11,7 @@ dotenv.config()
 const PORT = process.env.PORT || 3000
 
 mongoose.connect(process.env.DBURI, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then((res) => app.listen(3000, () => console.log('server listening at port '+ PORT)))
+    .then((res) => app.listen(PORT, () => console.log('server listening at port '+ PORT)))
     .catch(err => console.log(err))
 
 app.set('view engine', 'ejs')
