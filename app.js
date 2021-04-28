@@ -2,14 +2,16 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const todoRoutes = require('./routes/todoRoutes')
+const dotenv = require('dotenv')
 
 
 const app = express()
+dotenv.config()
 
-// const dbURI = "mongodb+srv://testUser:test123@cluster0.vu7xx.mongodb.net/TestingDB"
-const dbURI = "mongodb://testUser:test123@cluster0-shard-00-00.vu7xx.mongodb.net:27017,cluster0-shard-00-01.vu7xx.mongodb.net:27017,cluster0-shard-00-02.vu7xx.mongodb.net:27017/TestingDB?ssl=true&replicaSet=atlas-5qniev-shard-0&authSource=admin&retryWrites=true&w=majority"
+const PORT = process.env.PORT || 3000
 
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.DBURI, {useNewUrlParser: true, useUnifiedTopology: true})
+    .then((res) => app.listen(3000, () => console.log('server listening at port '+ PORT)))
     .catch(err => console.log(err))
 
 app.set('view engine', 'ejs')
@@ -20,6 +22,3 @@ app.use(express.urlencoded({ extended:true }))
 
 // routes
 app.use('/', todoRoutes)
-
-
-app.listen(3000, () => console.log('server listening at port 3000'))
